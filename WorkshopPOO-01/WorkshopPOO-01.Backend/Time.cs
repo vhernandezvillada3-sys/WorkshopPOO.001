@@ -61,16 +61,16 @@ namespace WorkshopPOO_01.Backend
         }
 
         // Methods
-     
-       public long ToMillisseconds()  
-        {
-            const long MS_PER_HOUR = 3600000;
-            const long MS_PER_MINUTE = 60000;
-            const long MS_PER_SECOND = 1000;
 
-            return _hour * MS_PER_HOUR +
-                   _minute * MS_PER_MINUTE +
-                   _second * MS_PER_SECOND +
+        public long ToMillisseconds()
+        {
+            const long MillisecondsPerHour = 3600000;
+            const long MillisecondsPerMinute = 60000;
+            const long MillisecondsPerSecond = 1000;
+
+            return _hour * MillisecondsPerHour +
+                   _minute * MillisecondsPerMinute +
+                   _second * MillisecondsPerSecond +
                    _millisecond;
         }
 
@@ -79,38 +79,35 @@ namespace WorkshopPOO_01.Backend
             return _hour * 3600 + _minute * 60 + _second;
         }
 
-        public int ToMinutes()  
+        public int ToMinutes()
         {
             return _hour * 60 + _minute;
         }
 
         public bool IsOtherDay(Time other)
         {
-            const long MS_PER_DAY = 24 * 60 * 60 * 1000;
-            return this.ToMillisseconds() + other.ToMillisseconds() >= MS_PER_DAY;
+            const long MillisecondsPerDay = 24 * 60 * 60 * 1000;
+            return this.ToMillisseconds() + other.ToMillisseconds() >= MillisecondsPerDay;
         }
 
         public Time Add(Time other)
         {
-            const long MS_PER_HOUR = 3600000;
-            const long MS_PER_MINUTE = 60000;
-            const long MS_PER_SECOND = 1000;
-            const int HOURS_PER_DAY = 24;
+            const long MillisecondsPerHour = 3600000;
+            const long MillisecondsPerMinute = 60000;
+            const long MillisecondsPerSecond = 1000;
+            const int HoursPerDay = 24;
 
             long totalMs = this.ToMillisseconds() + other.ToMillisseconds();
-
             long remainingMs = totalMs;
 
-            int newHour = (int)((remainingMs / MS_PER_HOUR) % HOURS_PER_DAY);
-            remainingMs %= MS_PER_HOUR;
+            int newHour = (int)((remainingMs / MillisecondsPerHour) % HoursPerDay);
+            remainingMs %= MillisecondsPerHour;
 
-            int newMinute = (int)(remainingMs / MS_PER_MINUTE);
-            remainingMs %= MS_PER_MINUTE;
+            int newMinute = (int)(remainingMs / MillisecondsPerMinute);
+            remainingMs %= MillisecondsPerMinute;
 
-            int newSecond = (int)(remainingMs / MS_PER_SECOND);
-            remainingMs %= MS_PER_SECOND;
-
-            int newMillisecond = (int)remainingMs;
+            int newSecond = (int)(remainingMs / MillisecondsPerSecond);
+            int newMillisecond = (int)(remainingMs % MillisecondsPerSecond);
 
             return new Time(newHour, newMinute, newSecond, newMillisecond);
         }
@@ -155,5 +152,3 @@ namespace WorkshopPOO_01.Backend
                     $"The millisecond: {millisecond}, is not valid.");
             return millisecond;
         }
-    }
-}
